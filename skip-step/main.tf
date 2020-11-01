@@ -14,36 +14,6 @@ resource "azurerm_resource_group" "Prod" {
   name     = "myresourcegroup01"
   location = "West Europe"
 }
-resource "azurerm_public_ip" "Prodlb" {
-  name                = "PublicIPForLB"
-  location            = "West Europe"
-  resource_group_name = "${azurerm_resource_group.Prod.name}"
-  allocation_method   = "Static"
-}
-resource "azurerm_lb" "Prod" {
-  name                = "TestLoadBalancer"
-  location            = "West Europe"
-  resource_group_name = "${azurerm_resource_group.Prod.name}"
-
-  frontend_ip_configuration {
-    name                 = "LBPip"
-    public_ip_address_id = "${azurerm_public_ip.Prodlb.id}"
-  }
-}
-resource "azurerm_lb_backend_address_pool" "Prod" {
-  resource_group_name = "${azurerm_resource_group.Prod.name}"
-  loadbalancer_id     = "${azurerm_lb.Prod.id}"
-  name                = "BackEndAddressPool"
-}
-resource "azurerm_lb_rule" "Prod" {
-  resource_group_name            = "${azurerm_resource_group.Prod.name}"
-  loadbalancer_id                = "${azurerm_lb.Prod.id}"
-  name                           = "LBRule"
-  protocol                       = "Tcp"
-  frontend_port                  = 3389
-  backend_port                   = 3389
-  frontend_ip_configuration_name = "LBPip"
-}
 resource "azurerm_public_ip" "Prod" {  //Here defined the public IP
   name                         = "VMpublicIP"  
   location                     = "${azurerm_resource_group.Prod.location}"  
@@ -154,3 +124,4 @@ source_image_reference {
     sku       = "2019-Datacenter"
     version   = "latest"
   }
+}
