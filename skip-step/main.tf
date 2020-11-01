@@ -20,7 +20,7 @@ resource "azurerm_public_ip" "Prod" {  //Here defined the public IP
   resource_group_name          = "${azurerm_resource_group.Prod.name}"  
   allocation_method            = "Static"  
   idle_timeout_in_minutes      = 30  
-  domain_name_label            = "myvm1"
+  domain_name_label            = "myvm01"
 }
 # Create a virtual network within the resource group
 resource "azurerm_virtual_network" "Prod" {
@@ -103,7 +103,7 @@ resource "azurerm_network_interface_security_group_association" "Prod" {
   network_security_group_id = "${azurerm_network_security_group.Prod.id}"
 }
 resource "azurerm_windows_virtual_machine" "Prod" {
-  name                = "myvm1"
+  name                = "myvm01"
   resource_group_name = "${azurerm_resource_group.Prod.name}"
   location            = "${azurerm_resource_group.Prod.location}"
   size                = "Standard_DS2_v2"
